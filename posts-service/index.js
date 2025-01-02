@@ -1,10 +1,11 @@
 import express from "express";
 import crypto from "crypto";
 import axios from "axios";
+import cors from "cors";
 const app = express();
 const allPosts = [];
 app.use(express.json());
-
+app.use(cors());
 app.get("/", (req, res) => {
   res.send("Welcome to post-service!");
 });
@@ -14,7 +15,7 @@ app.post("/post/create", (req, res) => {
   const { title } = req.body;
   let post = {
     id: id,
-    title: postBody,
+    title: title,
   };
   allPosts.push(post);
   res.send(allPosts);

@@ -1,10 +1,9 @@
 import express from "express";
-import crypto from "crypto";
-import axios from "axios";
+import cors from "cors";
 const app = express();
 const allPosts = [];
 app.use(express.json());
-
+app.use(cors());
 app.get("/", (req, res) => {
   res.send("Welcome to query service!");
 });

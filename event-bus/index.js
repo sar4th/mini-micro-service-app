@@ -14,7 +14,7 @@ app.post("/events", (req, res) => {
   axios.post("http://localhost:4001/events", event);
 });
 
-const PORT = 4005;
+const PORT = 4006;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
