@@ -4,9 +4,9 @@ import "./App.css";
 
 function App() {
   const [title, setTitle] = useState<string>("");
-  const [allPosts, setAllPosts] = useState<any[]>([]);
+  const [allPosts, setAllPosts] = useState<unknown[]>([]);
   const [reFetch, setRefetch] = useState<boolean>(false);
-
+  const [comment, setComment] = useState();
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -34,7 +34,20 @@ function App() {
 
     fetchData();
   }, [reFetch]);
-
+  const handleAddComment = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/comment/add", {
+        comment,
+      });
+      setTitle("");
+      if (response?.data) {
+        setRefetch((prev) => !prev);
+      }
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
+  };
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -54,6 +67,7 @@ function App() {
               placeholder="Enter post title"
             />
           </label>
+
           <button type="submit" style={styles.button}>
             Submit
           </button>
@@ -67,6 +81,24 @@ function App() {
             {allPosts.map((post, index) => (
               <li key={index} style={styles.postItem}>
                 {post.title}
+                {post.comment}
+                <form onSubmit={handleAddComment} style={styles.form}>
+                  <label style={styles.label}>
+                    <input
+                      type="text"
+                      value={comment?.comment}
+                      onChange={(e) =>
+                        setComment({ id: post?.id, comment: e.target.value })
+                      }
+                      style={styles.input}
+                      placeholder="Enter comment"
+                    />
+                  </label>
+
+                  <button type="submit" style={styles.button}>
+                    Submit
+                  </button>
+                </form>
               </li>
             ))}
           </ul>
@@ -122,7 +154,6 @@ const styles = {
     border: "1px solid #ccc",
     borderRadius: "8px",
     fontSize: "1rem",
-    width: "100%",
   },
   button: {
     padding: "12px 0",

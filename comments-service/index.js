@@ -1,13 +1,34 @@
-import http from "http";
-
-// Creating server
-const server = http.createServer((req, res) => {
-  // Sending the response
-  res.write("This is the response from the server");
-  res.end();
+import express from "express";
+import cors from "cors";
+import axios from "axios";
+const app = express();
+const allComments = [];
+app.use(express.json());
+app.use(cors());
+app.get("/", (req, res) => {
+  res.send("Welcome to comments service!");
 });
 
-// Server listening to port 3000
-server.listen(4000, () => {
-  console.log("Comments service is running on port 4000");
+app.get("/posts/all", (req, res) => {
+  res.send(allPosts);
+});
+app.post("/comment/add", (req, res) => {
+  const comment = req.body;
+  allComments.push(comment);
+  axios.post("http://localhost:4006/events", {
+    type: "commentCreated",
+    post: comment,
+  });
+});
+app.post("/events", (req, res) => {
+  const event = req.body;
+  const eventType = event.type;
+  switch (eventType) {
+    case "postCreated":
+      allPosts.push(event.post);
+  }
+});
+const PORT = 4000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

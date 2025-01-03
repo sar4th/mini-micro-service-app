@@ -17,6 +17,14 @@ app.post("/events", (req, res) => {
   switch (eventType) {
     case "postCreated":
       allPosts.push(event.post);
+      break;
+    case "commentCreated":
+      Object.assign(
+        allPosts.find((post) => post.id === event?.comment.id),
+        {
+          comment,
+        }
+      );
   }
 });
 const PORT = 4002;
