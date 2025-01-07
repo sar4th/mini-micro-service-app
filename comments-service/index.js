@@ -13,12 +13,17 @@ app.get("/posts/all", (req, res) => {
   res.send(allPosts);
 });
 app.post("/comment/add", (req, res) => {
-  const comment = req.body;
-  allComments.push(comment);
-  axios.post("http://localhost:4006/events", {
-    type: "commentCreated",
-    post: comment,
-  });
+  debugger;
+  try {
+    const { comment } = req.body;
+    allComments.push(comment);
+    axios.post("http://localhost:4006/events", {
+      type: "commentCreated",
+      post: comment,
+    });
+  } catch (error) {
+    console.log(error, "error");
+  }
 });
 app.post("/events", (req, res) => {
   const event = req.body;

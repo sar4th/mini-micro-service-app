@@ -2,15 +2,17 @@
   "name": "mini-microservice",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "start":  "concurrently \"npm run dev --prefix client/micro-service-front-end\" \"npm start --prefix comments-service\" \"npm start --prefix posts-service\" \"npm start --prefix query-service\" \"npm start --prefix event-bus\""
-}
-,
+  "scripts": {
+    "start": "concurrently \"npm run dev --prefix client/micro-service-front-end\" \"npm start --prefix comments-service\" \"npm start --prefix posts-service\" \"npm start --prefix query-service\" \"npm start --prefix event-bus\" \"npm start --prefix moderation-service\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "concurrently": "^9.1.2"
+    "axios": "^1.7.9",
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
   }
 }

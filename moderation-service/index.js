@@ -1,22 +1,23 @@
 import express from "express";
+import cors from "cors";
 import axios from "axios";
 const app = express();
-
+const allComments = [];
 app.use(express.json());
-
+app.use(cors());
 app.get("/", (req, res) => {
-  res.send("Welcome to event-bus-service!");
+  res.send("Welcome to moderation service!");
 });
 
 app.post("/events", (req, res) => {
-  debugger;
   const event = req.body;
-  // axios.post("http://localhost:4000/events", event);
-  // axios.post("http://localhost:4001/events", event);
-  axios.post("http://localhost:4002/events", event);
+  const eventType = event.type;
+  switch (eventType) {
+    case "postCreated":
+      allPosts.push(event.post);
+  }
 });
-
-const PORT = 4006;
+const PORT = 4004;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
