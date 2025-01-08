@@ -19,21 +19,18 @@ app.post("/events", (req, res) => {
       allPosts.push(event.post);
       break;
     case "commentCreated":
-      // Optional chaining is used to safely access event?.post.id
-      if (event?.post?.id) {
-        const post = allPosts.find((post) => post.id === event.post.id);
-        let comment = event.post.comment;
-        if (post) {
-          // If the post is found, add the comment
-          Object.assign(post, { comment });
-        } else {
-          console.log("Post not found for the provided ID");
-        }
+      let comment = event.comment;
+      let commentID = event.comment.id;
+      let post = allPosts.find((post) => post?.id == commentID);
+      if (post?.comment?.length > 0) {
+        post.comment.push(comment);
       } else {
-        console.log("Invalid event or post structure", event);
+        post.comment = [];
+        post.comment.push(comment);
       }
-
-      console.log("this is for testing ", event?.post?.id, allPosts);
+      res.json({
+        message: "comment added successfully",
+      });
       break;
   }
 });

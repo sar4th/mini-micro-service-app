@@ -9,7 +9,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/events", (req, res) => {
-  debugger;
   const event = req.body;
   // axios.post("http://localhost:4000/events", event);
   // axios.post("http://localhost:4001/events", event);

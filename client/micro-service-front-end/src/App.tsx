@@ -37,9 +37,12 @@ function App() {
   const handleAddComment = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/comment/add", {
-        comment,
-      });
+      const response = await axios.post(
+        `http://localhost:4000/comment/${comment.id}/add`,
+        {
+          comment,
+        }
+      );
       setTitle("");
       if (response?.data) {
         setRefetch((prev) => !prev);
