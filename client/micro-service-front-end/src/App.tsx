@@ -81,11 +81,20 @@ function App() {
         <h2 style={styles.subHeading}>All Posts</h2>
         {allPosts && allPosts.length > 0 ? (
           <ul style={styles.postList}>
-            {allPosts.map((post, index) => (
+            {allPosts?.map((post, index) => (
               <li key={index} style={styles.postItem}>
-                {post.title}
-                {post.comment}
-                <form onSubmit={handleAddComment} style={styles.form}>
+                <h3>{post.title}</h3>
+                {/* Render comments */}
+                {post?.comment?.map((comment, commentIndex) => (
+                  <p key={commentIndex} style={{ color: "red" }}>
+                    {comment.comment.comment}
+                  </p>
+                ))}
+                {/* Form to add a new comment */}
+                <form
+                  onSubmit={(e) => handleAddComment(e, post.id)}
+                  style={styles.form}
+                >
                   <label style={styles.label}>
                     <input
                       type="text"
@@ -97,7 +106,6 @@ function App() {
                       placeholder="Enter comment"
                     />
                   </label>
-
                   <button type="submit" style={styles.button}>
                     Submit
                   </button>
