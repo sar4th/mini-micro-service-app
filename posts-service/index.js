@@ -19,7 +19,7 @@ app.post("/post/create", (req, res) => {
   };
   allPosts.push(post);
   res.send(allPosts);
-  axios.post("http://localhost:4006/events", {
+  axios.post("http://event-bus-clusterip-srv:4006/events", {
     type: "postCreated",
     post: post,
   });
